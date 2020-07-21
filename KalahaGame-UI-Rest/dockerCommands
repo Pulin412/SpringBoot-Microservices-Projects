@@ -1,0 +1,4 @@
+docker build -t kalaha .
+docker run -d -p 8080:8080 kalaha
+docker ps
+docker stop <<containerId>>

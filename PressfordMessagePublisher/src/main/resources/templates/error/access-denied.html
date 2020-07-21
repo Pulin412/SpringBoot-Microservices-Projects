@@ -1,0 +1,17 @@
+<!-- Landing HTML page for unauthorized access -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Access Denied')" />
+<body>
+	<div th:replace="fragments/nav :: nav"></div>
+	<div class="container my-3">
+		<div layout:fragment="content" th:remove="tag">
+			<h3>Access denied</h3>
+			<p>
+				<a href="/" th:href="@{/}">Back to home page</a>
+			</p>
+		</div>
+	</div>
+
+</body>
+</html>

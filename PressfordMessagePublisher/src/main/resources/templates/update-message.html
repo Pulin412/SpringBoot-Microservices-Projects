@@ -1,0 +1,53 @@
+<!-- Page for updating a message -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+     <head th:replace="fragments/header :: header('Update Message')" />
+    <body>
+    <div th:replace="fragments/nav :: nav"></div>
+    
+        <div class="container my-5">
+            <h2 class="mb-5">Update Message</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form action="#" th:action="@{/update/{id}(id=${message.id})}" th:object="${message}" method="post">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="title" class="col-form-label">Title</label>
+                                <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="Title">
+                                <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger"></span>
+                            </div>
+                            <div class="row">
+  								<div class="form-group col-md-6">
+	                                <label for="body" class="col-form-label">Message</label>
+	                                <textarea rows="10" cols="120" th:field="*{body}" class="form-control" id="body" placeholder="Body"></textarea>
+	                                <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}" class="text-danger"></span>
+                            	</div>
+                    		</div>
+                           <div class="form-group col-md-6">
+                                <label for="dateCreated" class="col-form-label">Date Created</label>
+                                <input type="date" th:field="*{dateCreated}" th:pattern="yyyy-MM-dd" />
+            					<span th:if="${#fields.hasErrors('dateCreated')}" th:errors="*{dateCreated}"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="creator" class="col-form-label">Creator</label>
+                                <input type="text" th:field="*{creator}" class="form-control" id="creator" placeholder="Creator">
+                                <span th:if="${#fields.hasErrors('creator')}" th:errors="*{creator}" class="text-danger"></span>
+                            </div>
+                            
+                            <div class="form-group col-md-6">
+                                <input type="hidden" th:field="*{likedByEmployees}" class="form-control" id="likedByEmployees" placeholder="likedByEmployees">
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-5">
+                                <input type="submit" class="btn btn-primary" value="Update Message">
+                            </div>
+                        </div>    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

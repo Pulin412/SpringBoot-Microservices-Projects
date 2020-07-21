@@ -1,0 +1,13 @@
+<!-- Page to show the pie chart -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Likes Distribution')" />
+<body>
+	<div th:replace="fragments/nav :: nav"></div>
+	<h3 align="center">Pressford Message Publisher</h3>
+	<div class="container my-5" align="center">
+		<img align="middle" alt="Likes Distribution" th:src="@{${pieUrl}}" />
+	</div>
+</body>
+</html>

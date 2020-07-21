@@ -1,0 +1,88 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head th:replace="fragments/header :: header('Home')"/>
+<body style="background-color:lightgrey">
+<div th:replace="fragments/nav :: nav"></div>
+<div class="container my-5">
+    <div th:if="${message}" align="center">
+        <h5 th:text="${message}"></h5>
+    </div>
+
+    <form th:action="@{/makeMove}" th:object="${game}" method="post">
+        <a href="/reset">Reset Game</a>
+        <div th:if="${game ne null}" align="center">
+            <table style="padding: 15px;border: 1px solid black;background-color: #AEB6BF;">
+                <tr>
+                    <td style="width:150px;padding:5px" align="center">
+                        <table>
+                            <tr>
+                                <div style="display:inline-block;user-select: none;opacity: 0;border:0.1px solid ;border-radius:0.5px;padding:1px;background:linear-gradient(to bottom,,)">Transparent Text</div>
+                                <div style="display:inline-block;user-select: none;opacity: 0;border:0.1px solid ;border-radius:0.5px;padding:1px;background:linear-gradient(to bottom,,)">Transparent Text</div>
+                                <div style="display:inline-block;user-select: none;opacity: 0;border:0.1px solid ;border-radius:0.5px;padding:1px;background:linear-gradient(to bottom,,)">Transparent Text</div>
+                                <div style="display:inline-block;user-select: none;opacity: 0;border:0.1px solid ;border-radius:0.5px;padding:1px;background:linear-gradient(to bottom,,)">Transparent Text</div>
+                                <div style="display:inline-block;user-select: none;opacity: 0;border:0.1px solid ;border-radius:0.5px;padding:1px;background:linear-gradient(to bottom,,)">Transparent Text</div>
+                                <div style="display:inline-block;user-select: none;opacity: 0;border:0.1px solid ;border-radius:0.5px;padding:1px;background:linear-gradient(to bottom,,)">Transparent Text</div>
+                                <div th:each="i: ${#numbers.sequence(1,6)}">
+                                    <input type="text" id="pits1" value="stones" th:value="${game.pitMap.get(i).stones}"
+                                           readonly="readonly" size="1" align="center"/>
+                                    <p th:text="${i}"></p>
+                                </div>
+                                <div>
+                                    <input type="text" id="home1" value="stones" th:value="${game.pitMap.get(7).stones}"
+                                           readonly="readonly" size="1" style="background: transparent;"  align="center"/>
+                                    <p th:text="7_home1"></p>
+                                </div>
+                            </tr>
+                        </table>
+                    <td style="width:150px;padding:5px" align="center">
+                        <table>
+                            <tr>
+                                <div>
+                                    <input type="text" id="home2" value="stones"
+                                           th:value="${game.pitMap.get(14).stones}"
+                                           readonly="readonly" size="1" style="background: transparent;"  align="center"/>
+                                    <p th:text="14_home2"></p>
+                                </div>
+                                <div th:each="i: ${#numbers.sequence(13,8)}">
+                                    <input type="text" id="pits2" value="stones" th:value="${game.pitMap.get(i).stones}"
+                                           readonly="readonly" size="1" align="center"/>
+                                    <p th:text="${i}"></p>
+                                </div>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div th:if="${winMessage eq null}">
+                <p>Select Pit: </p>
+                <div th:if="${game.nextMove eq 1 || game.nextMove eq null}">
+                    <select th:name="selectedPit" style="background-color: #AEB6BF;">
+                        <option value="1" th:if="${game.pitMap.get(1).stones > 0}">1</option>
+                        <option value="2" th:if="${game.pitMap.get(2).stones > 0}">2</option>
+                        <option value="3" th:if="${game.pitMap.get(3).stones > 0}">3</option>
+                        <option value="4" th:if="${game.pitMap.get(4).stones > 0}">4</option>
+                        <option value="5" th:if="${game.pitMap.get(5).stones > 0}">5</option>
+                        <option value="6" th:if="${game.pitMap.get(6).stones > 0}">6</option>
+                    </select>
+                </div>
+                <div th:if="${game.nextMove eq 2}">
+                    <select th:name="selectedPit" style="background-color: #AEB6BF;">
+                        <option value="8" th:if="${game.pitMap.get(8).stones > 0}">8</option>
+                        <option value="9" th:if="${game.pitMap.get(9).stones > 0}">9</option>
+                        <option value="10" th:if="${game.pitMap.get(10).stones > 0}">10</option>
+                        <option value="11" th:if="${game.pitMap.get(11).stones > 0}">11</option>
+                        <option value="12" th:if="${game.pitMap.get(12).stones > 0}">12</option>
+                        <option value="13" th:if="${game.pitMap.get(13).stones > 0}">13</option>
+                    </select>
+                </div>
+                <br/>
+                <input type="submit" value="MakeMove" style="background-color: #AEB6BF;"/>
+            </div>
+            <br/>
+            <input hidden="hidden" type="number" th:name="gameId" th:value="${game.id}"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>

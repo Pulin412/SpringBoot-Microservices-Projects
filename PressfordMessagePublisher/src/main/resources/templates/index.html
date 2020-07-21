@@ -1,0 +1,99 @@
+<!-- Index (home) page for the application after successful login -->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Home')" />
+<body>
+	<div th:replace="fragments/nav :: nav"></div>
+	<h3 align="center">Pressford Message Publisher</h3>
+	<div th:switch="${messages}" class="container my-5">
+		<h2 th:case="null">No Messages yet!</h2>
+		<div class="row">
+			<div th:case="*">
+				<table class="table">
+					<tbody>
+						<tr>
+							<td><h5 class="my-5">Published Messages</h5></td>
+							<td>
+								<p class="my-5" th:switch="${role}">
+									<a href="/signup" class="btn btn-primary" th:case="admin">Publish
+										New Message</a>
+								</p>
+							</td>
+							<td>
+								<p class="my-5" th:switch="${role}">
+									<a href="/piechart" class="btn btn-primary" th:case="admin">Likes
+										Chart</a>
+								</p>
+							</td>
+							<td><h6 th:text="Logged+ ' '+ in+' '+as+' - '+${user}" align="right" style="color: blue;"></h6>
+								<div th:switch="${role}" align="right">
+									<label th:case="user">Available Likes - </label>&nbsp;<label
+										th:text="${availableLikes}" th:if="${role} eq 'user'"></label>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<h5 style="color: red;" th:text="${likeerror}"></h5>
+				<table class="table table-striped table-responsive-md">
+					<thead>
+						<tr>
+							<th width="20"><label th:text="Title"></label></th>
+							<th><label th:text="Message"></label></th>
+							<th><label th:text="Date"></label></th>
+							<th><label th:text="Creator"></label></th>
+							<th th:switch="${role}"><label th:text="Edit"
+								th:case="admin"></label></th>
+							<th th:switch="${role}"><label th:text="Delete"
+								th:case="admin"></label></th>
+							<th th:switch="${role}"><label th:text="Likes"
+								th:case="admin"></label></th>
+							<th><label th:text="Comment"></label></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="message : ${messages}">
+							<td th:text="${message.title}" width="10%"></td>
+							<td><label th:text="${message.body}"></label></td>
+							<td th:text="${message.dateCreatedStr}" width="10%"></td>
+							<td th:text="${message.creator}" width="10%"></td>
+							<td><div th:switch="${role}">
+									<a th:href="@{/edit/{id}(id=${message.id})}"
+										class="btn btn-primary" th:case="admin"><i
+										class="fas fa-user-edit ml-2"></i></a>
+								</div></td>
+							<td>
+								<div th:switch="${role}">
+									<a th:href="@{/delete/{id}(id=${message.id})}"
+										class="btn btn-primary" th:case="admin"><i
+										class="fas fa-user-times ml-2"></i></a>
+								</div>
+							</td>
+							<td>
+								<div th:switch="${role}">
+									<label th:text="${#lists.size(message.likedByEmployees)}"
+										th:case="admin"></label>
+								</div>
+							</td>
+							<td>
+								<div>
+									<a th:href="@{/comment/save/{id}(id=${message.id})}">View/Edit Comments</a>
+								</div>
+							</td>
+							<td>
+								<div th:switch="${role}">
+									<a th:href="@{/like/{id}(id=${message.id})}" th:case="user">Like</a>
+								</div>
+							</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
